@@ -1,8 +1,11 @@
 package com.miracakkoyun.isimsehiroyunu;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -14,9 +17,11 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
 import java.util.Random;
-public class NormalOyunActivity extends AppCompatActivity {
-    private TextView txtSehirBilgi,txtSehirAdUzunlugu,txtSkor;
+
+public class SureliOyunActivity extends AppCompatActivity {
+    private TextView txtSure,txtSehirAdUzunlugu,txtSkor,textGameOver;
     private EditText editTxtTahmin;
+    private Button btnHarfAlS,btnTahminS;
     private String[] iller = {
             "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Aksaray", "Amasya", "Ankara", "Antalya", "Ardahan", "Artvin",
             "Aydın", "Balıkesir", "Bartın", "Batman", "Bayburt", "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur",
@@ -29,46 +34,56 @@ public class NormalOyunActivity extends AppCompatActivity {
             "Zonguldak"
     };
     private Random rndIl,rndHarf;
-    private int rndIlNumber,rndNumberHarf,baslangicHarfSayisi;
+    private int rndIlNumber,rndNumberHarf,baslangicHarfSayisi,toplamSure=180000,yedekTime=9;
     private String gelenIl,ilBoyutu,editTxtGelenTahmin;
     private ArrayList<Character> ilHarfleri;
     private double totalPuan=0,soruPuan=100,azaltilacakPuan=0;
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_normal_oyun);
+        setContentView(R.layout.activity_sureli_oyun);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        txtSehirBilgi=findViewById(R.id.txtSehirBilgi);
-        txtSehirAdUzunlugu=findViewById(R.id.txtSehirAdUzunlugu);
-        editTxtTahmin=findViewById(R.id.editTxtTahmin);
-        txtSkor=findViewById(R.id.txtSkor);
+        txtSure=findViewById(R.id.txtSure);
+        txtSehirAdUzunlugu=findViewById(R.id.txtSehirAdUzunluguS);
+        editTxtTahmin=findViewById(R.id.editTxtTahminS);
+        txtSkor=findViewById(R.id.txtSkorS);
         rndHarf=new Random();
+        btnHarfAlS=findViewById(R.id.btnHarfAlS);
+        btnTahminS=findViewById(R.id.btnTahminS);
         randomDegerleriBelirle();
+        textGameOver=findViewById(R.id.oyunBitti);
+        textGameOver.setVisibility(View.INVISIBLE);
+        new CountDownTimer(toplamSure, 1000) {
+            @Override
+            public void onTick(long l) {
+                if(((l%60000)/1000)<10){
+                    txtSure.setText((l/60000)+":0"+yedekTime);
+                    yedekTime-=1;
+                }else{
+                    txtSure.setText((l/60000)+":"+(l%60000)/1000);
+                    yedekTime=9;
+                }
 
-    }
-    public void btnTahmin(View view){
-        editTxtGelenTahmin=editTxtTahmin.getText().toString();
-        if(!TextUtils.isEmpty(editTxtGelenTahmin)){
-            if(editTxtGelenTahmin.equals(gelenIl)){
-                totalPuan+=soruPuan;
-                txtSkor.setText("Skor : "+totalPuan);
-                randomDegerleriBelirle();
-            }else {
-                System.out.println("Hatalı Tahmin");
 
             }
-        }else{
-            System.out.println("Tahmin boş olamaz");
-        }
-        editTxtTahmin.setText("");
+
+            @Override
+            public void onFinish() {
+                btnHarfAlS.setVisibility(View.INVISIBLE);
+                btnTahminS.setVisibility(View.INVISIBLE);
+                editTxtTahmin.setVisibility(View.INVISIBLE);
+                textGameOver.setVisibility(View.VISIBLE);
+
+            }
+        }.start();
     }
-    public void btnHarfAl(View view){
+    public void btnHarfAlS(View view){
         if(ilHarfleri.size()>0){
             soruPuan-=10;
             rndNumberHarf=rndHarf.nextInt(ilHarfleri.size());
@@ -96,8 +111,22 @@ public class NormalOyunActivity extends AppCompatActivity {
             ilHarfleri.remove(rndNumberHarf);
 
         }
+    }
+    public void btnTahminS(View view){
+        editTxtGelenTahmin=editTxtTahmin.getText().toString();
+        if(!TextUtils.isEmpty(editTxtGelenTahmin)){
+            if(editTxtGelenTahmin.equals(gelenIl)){
+                totalPuan+=soruPuan;
+                txtSkor.setText("Skor : "+totalPuan);
+                randomDegerleriBelirle();
+            }else {
+                System.out.println("Hatalı Tahmin");
 
-
+            }
+        }else{
+            System.out.println("Tahmin boş olamaz");
+        }
+        editTxtTahmin.setText("");
     }
     private void randomDegerleriBelirle(){
 
@@ -106,7 +135,7 @@ public class NormalOyunActivity extends AppCompatActivity {
         rndIlNumber=rndIl.nextInt(iller.length);
         gelenIl=iller[rndIlNumber];
         System.out.println(gelenIl);
-        txtSehirBilgi.setText(gelenIl.length()+" Harfli İlimiz");
+
 
         if(gelenIl.length()>=5 && gelenIl.length()<=7){
             baslangicHarfSayisi=1;
@@ -163,5 +192,6 @@ public class NormalOyunActivity extends AppCompatActivity {
         ilHarfleri.remove(rndNumberHarf);
 
     }
+
 
 }
