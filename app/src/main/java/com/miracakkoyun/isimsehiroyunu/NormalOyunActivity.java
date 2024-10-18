@@ -1,5 +1,6 @@
 package com.miracakkoyun.isimsehiroyunu;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -162,6 +163,11 @@ public class NormalOyunActivity extends AppCompatActivity {
         txtSehirAdUzunlugu.setText(ilBoyutu);
         ilHarfleri.remove(rndNumberHarf);
 
+    }
+    public void btnexits(View view){
+        Intent exitMainMenuS=new Intent(this,MainActivity.class);
+        finish();
+        startActivity(exitMainMenuS);
     }
 
 }

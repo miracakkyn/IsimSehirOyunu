@@ -1,5 +1,6 @@
 package com.miracakkoyun.isimsehiroyunu;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -24,5 +25,20 @@ public class MainActivity extends AppCompatActivity {
     }
     public void normalGameButton(View view){
         //Normal Oyuna geçme aktivite kodu
+        Intent normalGame=new Intent(this,NormalOyunActivity.class);
+        finish();
+        startActivity(normalGame);
     }
+    public void timedGameButton(View view){
+        //Normal Oyuna geçme aktivite kodu
+        Intent timerGame=new Intent(this, SureliOyunActivity.class);
+        finish();
+        startActivity(timerGame);
+    }
+    public void exitButton(View view){
+        //Normal Oyuna geçme aktivite kodu
+        finish();
+
+    }
+
 }

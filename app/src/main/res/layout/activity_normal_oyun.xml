@@ -53,7 +53,7 @@
         android:id="@+id/btnHarfAl"
         android:layout_width="150dp"
         android:layout_height="67dp"
-        android:layout_marginStart="60dp"
+        android:layout_marginStart="44dp"
         android:layout_marginTop="40dp"
         android:onClick="btnHarfAl"
         android:text="HARF AL"
@@ -66,15 +66,13 @@
         android:id="@+id/btnTahmin"
         android:layout_width="150dp"
         android:layout_height="67dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="40dp"
-        android:layout_marginEnd="43dp"
+        android:layout_marginEnd="44dp"
         android:onClick="btnTahmin"
         android:text="TAHMİNDE BULUN"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnHarfAl"
         app:layout_constraintTop_toBottomOf="@+id/editTxtTahmin" />
 
     <TextView
@@ -88,4 +86,17 @@
         app:layout_constraintBottom_toTopOf="@+id/txtSehirBilgi"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnExit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="68dp"
+        android:onClick="btnexits"
+        android:text="EXIT"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/txtSkor"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

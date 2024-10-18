@@ -1,6 +1,7 @@
 package com.miracakkoyun.isimsehiroyunu;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
@@ -21,7 +22,7 @@ import java.util.Random;
 public class SureliOyunActivity extends AppCompatActivity {
     private TextView txtSure,txtSehirAdUzunlugu,txtSkor,textGameOver;
     private EditText editTxtTahmin;
-    private Button btnHarfAlS,btnTahminS;
+    private Button btnHarfAlS,btnTahminS,btnTekrarOyna,btnExitS;
     private String[] iller = {
             "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Aksaray", "Amasya", "Ankara", "Antalya", "Ardahan", "Artvin",
             "Aydın", "Balıkesir", "Bartın", "Batman", "Bayburt", "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur",
@@ -56,9 +57,12 @@ public class SureliOyunActivity extends AppCompatActivity {
         rndHarf=new Random();
         btnHarfAlS=findViewById(R.id.btnHarfAlS);
         btnTahminS=findViewById(R.id.btnTahminS);
+        btnTekrarOyna=findViewById(R.id.btnTekrarOyna);
+        btnTekrarOyna.setVisibility(View.INVISIBLE);
         randomDegerleriBelirle();
         textGameOver=findViewById(R.id.oyunBitti);
         textGameOver.setVisibility(View.INVISIBLE);
+        btnExitS=findViewById(R.id.btnExitS);
         new CountDownTimer(toplamSure, 1000) {
             @Override
             public void onTick(long l) {
@@ -79,6 +83,7 @@ public class SureliOyunActivity extends AppCompatActivity {
                 btnTahminS.setVisibility(View.INVISIBLE);
                 editTxtTahmin.setVisibility(View.INVISIBLE);
                 textGameOver.setVisibility(View.VISIBLE);
+                btnTekrarOyna.setVisibility(View.VISIBLE);
 
             }
         }.start();
@@ -191,6 +196,16 @@ public class SureliOyunActivity extends AppCompatActivity {
         txtSehirAdUzunlugu.setText(ilBoyutu);
         ilHarfleri.remove(rndNumberHarf);
 
+    }
+    public void btnTekrarOynaS(View view){
+        Intent tekrarOyna=new Intent(this, SureliOyunActivity.class);
+        finish();
+        startActivity(tekrarOyna);
+    }
+    public void btnexit(View view){
+        Intent exitMainMenu=new Intent(this,MainActivity.class);
+        finish();
+        startActivity(exitMainMenu);
     }
 
 
